@@ -3,6 +3,10 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+let mongoose = require('mongoose');
+require('dotenv').config()
+
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -21,6 +25,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+// database connection config 
+
+let mongoDB = process.env.URI;
+mongoose.connect(mongoDB, { useNewUrlParser: true,useUnifiedTopology: true })
+let db = mongoose.connection;
+db.on('error', console.error.bind(console,'Mongodb connection error:' ))
+db.once('open',()=> { console.log('connected to mongoose DB!')} )
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
