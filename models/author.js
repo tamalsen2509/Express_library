@@ -2,7 +2,7 @@ let mongoose = require('mongoose');
 
 let Scheama = mongoose.Schema;
 
-let AuthorSchema = new Schema(
+let AuthorSchema = new Scheama(
 {
     first_name : { type : String , required : true , maxlength : 100 },
     family_name : { type : String, required : true , maxlength : 100 },
